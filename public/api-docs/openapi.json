@@ -1,0 +1,158 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "RedQueen IVF AI API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.redqueenivfai.com"
+        }
+    ],
+    "paths": {
+        "/api/v1/message-insight": {
+            "post": {
+                "summary": "Message Insight Generator",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message_text": {
+                                        "type": "string"
+                                    },
+                                    "message_owner_id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["message_text", "message_owner_id"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "api_secret": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/message-insight/{id}": {
+            "get": {
+                "summary": "Get Message Insight",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the insight message",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "api_secret": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/message-insight/feedback/{id}": {
+            "post": {
+                "summary": "Add Feedback to Insight Message",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the insight message",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "emotion": {
+                                        "type": "string",
+                                        "enum": [
+                                            "accurate",
+                                            "inaccurate",
+                                            "semi-accurate"
+                                        ]
+                                    },
+                                    "critical": {
+                                        "type": "string",
+                                        "enum": [
+                                            "accurate",
+                                            "inaccurate",
+                                            "semi-accurate"
+                                        ]
+                                    },
+                                    "possible_response": {
+                                        "type": "string",
+                                        "enum": [
+                                            "accurate",
+                                            "inaccurate",
+                                            "semi-accurate"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "emotion",
+                                    "critical",
+                                    "possible_response"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": [],
+                        "api_secret": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "X-Api-Key",
+                "in": "header"
+            },
+            "api_secret": {
+                "type": "apiKey",
+                "name": "X-Api-Secret",
+                "in": "header"
+            }
+        }
+    }
+}
